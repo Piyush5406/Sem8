@@ -7,7 +7,7 @@ from keras.optimizers import Adam
 #from keras.preprocessing.image import ImageDataGenerator, img_to_array
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
-----------------------------------------
+---------------------------------------------------
 import os
 
 def total_files(folder_path):
@@ -24,7 +24,7 @@ test_rust = "Test\Test\Rust"
 valid_healthy = "Validation\Validation\Healthy"
 valid_powdery = "Validation\Validation\Powdery"
 valid_rust = "Validation\Validation\Rust"
-----------------------------------------------
+----------------------------------------------------
 print("Number of healthy leaf images in training set", total_files(train_healthy))
 print("Number of powder leaf images in training set", total_files(train_powdery))
 print("Number of rusty leaf images in training set", total_files(train_rust))
@@ -40,19 +40,11 @@ print("========================================================")
 print("Number of healthy leaf images in validation set", total_files(valid_healthy))
 print("Number of powder leaf images in validation set", total_files(valid_powdery))
 print("Number of rusty leaf images in validation set", total_files(valid_rust))
-----------------------------------------------------------------
+------------------------------------------------------------
 from PIL import Image
 import IPython.display as display
 
 image_path = 'Train\Train\Healthy\8ce77048e12f3dd4.jpg'
-
-with open(image_path, 'rb') as f:
-    display.display(display.Image(data=f.read(), width=500))
--------------------------------------------------------------------
-from PIL import Image
-import IPython.display as display
-
-image_path = 'Train\Train\Rust\80f09587dfc7988e.jpg'
 
 with open(image_path, 'rb') as f:
     display.display(display.Image(data=f.read(), width=500))
@@ -61,7 +53,7 @@ with open(image_path, 'rb') as f:
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 train_datagen = ImageDataGenerator(rescale=1./255, shear_range=0.2, zoom_range=0.2, horizontal_flip=True)
 test_datagen = ImageDataGenerator(rescale=1./255)
---------------------------------------------------------
+------------------------------------------------------------
 train_generator = train_datagen.flow_from_directory('Train\Train',
                                                     target_size=(225, 225),
                                                     batch_size=32,
@@ -71,7 +63,7 @@ validation_generator = test_datagen.flow_from_directory('Validation\Validation',
                                                         target_size=(225, 225),
                                                         batch_size=32,
                                                         class_mode='categorical')
--------------------------------------------------------------
+----------------------------------------------------------------
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 
@@ -84,16 +76,16 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Flatten())
 model.add(Dense(64, activation='relu'))
 model.add(Dense(3, activation='softmax'))
-----------------------------------------------------------------
+-----------------------------------------------------
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-------------------------------------------------------------
+--------------------------------------------------------------------
 history = model.fit(train_generator,
                     batch_size=16,
                     epochs=5,
                     validation_data=validation_generator,
                     validation_batch_size=16
                     )
-----------------------------------------------------------
+-----------------------------------------------------------------
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import figure
 
@@ -110,7 +102,7 @@ plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'val'], loc='upper left')
 plt.show()
---------------------------------------------
+-------------------------------------------------------------
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 
@@ -123,14 +115,14 @@ def preprocess_image(image_path, target_size=(225, 225)):
 
 x = preprocess_image('Train\Train\Rust\80f09587dfc7988e.jpg')
 x
----------------------------------------------
+------------------------------------------------------
 predictions = model.predict(x)
 predictions[0]
-------------------------------------------
+--------------------------------------------------
 labels = train_generator.class_indices
 labels = {v: k for k, v in labels.items()}
 labels
---------------------------------------
+-----------------------------------------
 predicted_label = labels[np.argmax(predictions)]
 print(predicted_label)
 ----------------------------------------
@@ -189,3 +181,4 @@ label.pack()
 
 
 root.mainloop()
+--------------------------------------------------
