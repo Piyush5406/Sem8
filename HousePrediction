@@ -73,7 +73,7 @@ plot_loss(history)
 ----------------------------------------
 #Prediction
 # Predict the median price of a home with [3, 4, 5, 6, 7] rooms.
-x = [3, 4, 5, 6, 7]
+x = np.array([3, 4, 5, 6, 7])
 y_pred = model.predict(x)
 for idx in range(len(x)):
     print("Predicted price of a home with {} rooms: ${}K".format(x[idx], int(y_pred[idx]*10)/10))
