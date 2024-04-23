@@ -93,4 +93,4 @@ int main() {
 
     return 0;
 }
-g++ 
+g++ filename.cpp -lgomp -o filename
